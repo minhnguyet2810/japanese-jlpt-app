@@ -2656,6 +2656,25 @@ textarea.cloze-input:focus {
   box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);
 }
 
+/* Level selector trên trang chủ: tách rõ từng ô N5, N4, N3, N2 */
+.level-selector-welcome [class*="flex"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.level-selector-welcome a,
+.level-selector-welcome span[aria-disabled] {
+  min-width: 100px;
+  flex: 0 0 auto;
+  white-space: normal;
+  word-break: break-word;
+}
+.level-selector-welcome a span,
+.level-selector-welcome span[aria-disabled] span {
+  display: block !important;
+}
+
 /* ----- Cổng đăng nhập (trang chủ) ----- */
 .gateway-back {
   display: inline-flex;

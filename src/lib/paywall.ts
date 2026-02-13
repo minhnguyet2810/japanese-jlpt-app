@@ -49,8 +49,9 @@ export const LESSON_NAV_ITEMS: { href: string; label: string; id: string }[] = [
   { href: '/lesson25', label: 'B25', id: 'lesson25' },
 ];
 
-/** Thanh nav 2: Mock Test (chỉ Mock 1-14 và Mock 15-20; không hiển thị link đến Mock tốt nghiệp N5) */
+/** Thanh nav 2: Mock Test */
 export const MOCK_TEST_NAV_ITEMS: { href: string; label: string; id: string }[] = [
   { href: '/n5-test', label: 'Mock 1-14', id: 'n5-test' },
   { href: '/n5-advanced-test', label: 'Mock 15-20', id: 'n5-advanced-test' },
+  { href: '/n5-test-21-25', label: 'Mock 21-25 (đề tốt nghiệp N5)', id: 'n5-test-21-25' },
 ];

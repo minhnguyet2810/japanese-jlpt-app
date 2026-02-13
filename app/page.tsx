@@ -54,12 +54,12 @@ export default function WelcomePage() {
           </Link>
         </div>
 
-        <section className="mt-8 pt-6 border-t border-teal-900/10">
+        <section className="mt-8 pt-6 border-t border-teal-900/10 level-selector-welcome">
           <p className="text-center text-gray-600 text-[0.95rem] mb-4">
             Sau khi mua gói VIP, bạn chọn cấp độ để học:
           </p>
           <LevelSelector
-            variant="bar"
+            variant="cards"
             title="Chọn cấp độ JLPT (N5 → N2)"
             showDescription
           />

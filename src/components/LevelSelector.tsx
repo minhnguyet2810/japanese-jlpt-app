@@ -41,9 +41,14 @@ export function LevelSelector({
         {JLPT_LEVELS.map((level) => {
           const content = (
             <>
-              <span className="text-[1.15rem] leading-none block mb-0.5">{level.label}</span>
+              <span className="text-[1.15rem] leading-none block mb-0.5" style={{ display: 'block' }}>
+                {level.label}
+              </span>
               {showDescription && level.description ? (
-                <span className="text-[0.7rem] font-medium opacity-90 block leading-tight text-center">
+                <span
+                  className="text-[0.7rem] font-medium opacity-90 leading-tight text-center"
+                  style={{ display: 'block', marginTop: '0.25rem' }}
+                >
                   {level.description}
                 </span>
               ) : null}
