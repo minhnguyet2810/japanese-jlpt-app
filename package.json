@@ -1,0 +1,29 @@
+{
+  "name": "japanese-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 4000 --webpack",
+    "dev:fresh": "./start-dev.sh",
+    "dev:fast": "next dev -H 127.0.0.1 -p 4000 --turbopack",
+    "dev:4001": "next dev -H 127.0.0.1 -p 4001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint || echo \"lint skipped\""
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.95.3",
+    "framer-motion": "^12.34.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "recharts": "^3.7.0",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.13",
+    "typescript": "^5.9.3"
+  }
+}
