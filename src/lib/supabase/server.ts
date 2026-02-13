@@ -52,7 +52,7 @@ export async function getCurrentUserAndProfile(): Promise<{
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // cast supabase sang any để tránh lỗi type infer 'never' khi select profile
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- select profile type infer
   const { data: profile } = await (supabase as any)
     .from('profiles')
     .select('is_premium')

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import ListeningDictation from '@/components/ListeningDictation';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import {
   lesson9,
   lesson9VocabQuizItems,
@@ -44,7 +45,7 @@ export default function Lesson9Page() {
 
   const [gamesDone, setGamesDone] = useState(0);
   const GAMES_TOTAL = 5;
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson9.sentences, 10));
 
   return (
     <>
@@ -376,36 +377,9 @@ export default function Lesson9Page() {
           </div>
         </section>
 
-        {/* Luyện nói – Hoàn thành 0/1 */}
-        {lesson9.sentences[0] && (
-          <SpeakingGame
-            target={lesson9.sentences[0]}
-            progressTotal={1}
-            progressCompleted={speakingCompleted}
-            onAttemptComplete={() => setSpeakingCompleted(1)}
-          />
-        )}
+        {/* Luyện nói – 10 câu (trộn bài học + trường âm, âm đục, âm ngắt, âm ghép) */}
+        <SpeakingGameMulti sentences={speakingList} />
 
-        {/* Luyện nghe – Chép chính tả */}
-        <ListeningDictation
-          items={lesson9.sentences.slice(0, 5).map((s) => ({
-            japanese: s.japanese,
-            romaji: s.romaji,
-            vietnamese: s.vietnamese,
-          }))}
-          onSpeak={speakJapaneseNow}
-          title="Luyện nghe – Chép chính tả"
-        />
-
-        {/* Luyện nói – Hoàn thành 0/1 */}
-        {lesson9.sentences[0] && (
-          <SpeakingGame
-            target={lesson9.sentences[0]}
-            progressTotal={1}
-            progressCompleted={speakingCompleted}
-            onAttemptComplete={() => setSpeakingCompleted(1)}
-          />
-        )}
         {/* Luyện nghe – Chép chính tả */}
         <ListeningDictation
           items={lesson9.sentences.slice(0, 5).map((s) => ({

@@ -37,7 +37,14 @@ function isProtectedPath(pathname: string): boolean {
   return PROTECTED_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'));
 }
 
+const PUBLIC_PATHS = ['/', '/login', '/signup', '/forgot-password', '/update-password'];
+
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  if (PUBLIC_PATHS.includes(pathname) || pathname.startsWith('/api')) {
+    return NextResponse.next({ request });
+  }
+
   try {
     let response = NextResponse.next({ request });
 
@@ -59,8 +66,6 @@ export async function middleware(request: NextRequest) {
     });
 
     const { data: { user } } = await supabase.auth.getUser();
-
-    const pathname = request.nextUrl.pathname;
 
     if (isProtectedPath(pathname)) {
       if (!user) {

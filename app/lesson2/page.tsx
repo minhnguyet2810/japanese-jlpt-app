@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import {
   lesson2,
@@ -124,7 +125,7 @@ export default function Lesson2Page() {
   const [gameCompleted, setGameCompleted] = useState({ so: false, noNo: false, builder: false });
   const gamesDone =
     (gameCompleted.so ? 1 : 0) + (gameCompleted.noNo ? 1 : 0) + (gameCompleted.builder ? 1 : 0);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson2.sentences, 10));
 
   return (
     <>
@@ -567,15 +568,8 @@ export default function Lesson2Page() {
           </div>
         </section>
 
-        {/* Luyện nói – Hoàn thành 0/1 */}
-        {lesson2.sentences[0] && (
-          <SpeakingGame
-            target={lesson2.sentences[0]}
-            progressTotal={1}
-            progressCompleted={speakingCompleted}
-            onAttemptComplete={() => setSpeakingCompleted(1)}
-          />
-        )}
+        {/* Luyện nói – ~10 câu */}
+        <SpeakingGameMulti sentences={speakingList} />
 
         {/* Luyện nghe – Chép chính tả */}
         <ListeningDictation

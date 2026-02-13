@@ -16,7 +16,8 @@ import {
 import WritingChallenge from '@/components/WritingChallenge';
 import { PracticeWord } from '@/components/PracticeWord';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { speakJapaneseNow } from '@/lib/speakJapanese';
 
@@ -94,7 +95,7 @@ export default function Lesson1Page() {
   );
   const [activeWordIndex, setActiveWordIndex] = useState(0);
   const activeWord = practiceWords[activeWordIndex] ?? practiceWords[0];
-  const speakingTarget = lesson1.sentences[0];
+  const [speakingList] = useState(() => getSpeakingSentences(lesson1.sentences, 10));
 
   // Bài tập điền chỗ trống nhỏ cho ngữ pháp
   const grammarDrills = [
@@ -195,7 +196,6 @@ export default function Lesson1Page() {
     (gameCompleted.grammar ? 1 : 0) +
     (gameCompleted.builder ? 1 : 0) +
     (gameCompleted.drill ? 1 : 0);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
 
   useEffect(() => {
     const allDrillCorrect =
@@ -773,13 +773,8 @@ export default function Lesson1Page() {
           </section>
         )}
 
-        {/* Luyện nói – Hoàn thành 0/1 */}
-        <SpeakingGame
-          target={speakingTarget}
-          progressTotal={1}
-          progressCompleted={speakingCompleted}
-          onAttemptComplete={() => setSpeakingCompleted(1)}
-        />
+        {/* Luyện nói – ~10 câu (trộn trường âm, âm đục, âm ngắt, âm ghép) */}
+        <SpeakingGameMulti sentences={speakingList} />
 
         {/* Luyện nghe – Chép chính tả */}
         <ListeningDictation

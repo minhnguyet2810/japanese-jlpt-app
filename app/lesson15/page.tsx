@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import AdvancedSkillPractice from '@/components/AdvancedSkillPractice';
 import { LessonNav } from '@/components/LessonNav';
@@ -25,7 +26,7 @@ export default function Lesson15Page() {
   const [vocabSelected, setVocabSelected] = useState<number | null>(null);
   const [grammarIndex, setGrammarIndex] = useState(0);
   const [grammarSelected, setGrammarSelected] = useState<number | null>(null);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson15.sentences, 10));
 
   useEffect(() => {
     setMounted(true);
@@ -374,14 +375,7 @@ export default function Lesson15Page() {
           </section>
 
           {/* Speaking & Listening */}
-          {lesson15.sentences[0] && (
-            <SpeakingGame
-              target={lesson15.sentences[0]}
-              progressTotal={1}
-              progressCompleted={speakingCompleted}
-              onAttemptComplete={() => setSpeakingCompleted(1)}
-            />
-          )}
+          <SpeakingGameMulti sentences={speakingList} />
 
           <ListeningDictation
             items={lesson15.sentences.slice(0, 5).map((s) => ({

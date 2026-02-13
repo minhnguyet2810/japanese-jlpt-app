@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { LessonNav } from '@/components/LessonNav';
 import { useUserState } from '@/store/useUserState';
@@ -50,7 +51,7 @@ export default function Lesson11Page() {
     (gameCompleted.vocab ? 1 : 0) +
     (gameCompleted.grammar ? 1 : 0) +
     (gameCompleted.builder ? 1 : 0);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson11.sentences, 10));
 
   const currentVocab = lesson11VocabQuizItems[vocabIndex];
   const currentGrammar = lesson11GrammarQuizItems[grammarIndex];
@@ -641,15 +642,8 @@ export default function Lesson11Page() {
           </div>
         </section>
 
-        {/* Luyện nói */}
-        {lesson11.sentences[0] && (
-          <SpeakingGame
-            target={lesson11.sentences[0]}
-            progressTotal={1}
-            progressCompleted={speakingCompleted}
-            onAttemptComplete={() => setSpeakingCompleted(1)}
-          />
-        )}
+        {/* Luyện nói – ~10 câu */}
+        <SpeakingGameMulti sentences={speakingList} />
 
         {/* Luyện nghe – Chép chính tả */}
         <ListeningDictation

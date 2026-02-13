@@ -40,8 +40,7 @@ export function PronunciationDeepDive() {
 
   const startPronunciationCheck = () => {
     if (typeof window === 'undefined') return;
-    const SR = (window as Window & { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown }).SpeechRecognition
-      || (window as Window & { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       setPronunciationError('Trình duyệt không hỗ trợ nhận diện giọng nói. Hãy dùng Chrome.');
       return;
@@ -50,13 +49,13 @@ export function PronunciationDeepDive() {
     setPronunciationResult(null);
     setPronunciationLoading(true);
 
-    const recognition = new (SR as new () => { lang: string; continuous: boolean; interimResults: boolean; onresult: (e: { results: Array<Array<{ transcript: string }> > }) => void; onerror: () => void; onend: () => void; start: () => void; stop: () => void })();
+    const recognition = new SR();
     recognition.lang = 'ja-JP';
     recognition.continuous = false;
     recognition.interimResults = false;
     let transcript = '';
 
-    recognition.onresult = (e: { results: Array<Array<{ transcript: string }>> }) => {
+    recognition.onresult = (e: SpeechRecognitionEvent) => {
       transcript = e.results?.[0]?.[0]?.transcript ?? '';
     };
     recognition.onerror = () => {

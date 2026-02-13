@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { lesson5 } from '@/data/lessons/lesson5';
 import { speakJapaneseNow } from '@/lib/speakJapanese';
@@ -98,7 +99,7 @@ export default function Lesson5Page() {
 
   const [vocabIndex, setVocabIndex] = useState(0);
   const [vocabSelected, setVocabSelected] = useState<number | null>(null);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson5.sentences, 10));
   const currentVocab = vocabQuizItems[vocabIndex];
 
   return (
@@ -549,9 +550,7 @@ export default function Lesson5Page() {
             <p className="progress-badge">Hoàn thành game 0/4</p>
           </div>
         </section>
-        {lesson5.sentences[0] && (
-          <SpeakingGame target={lesson5.sentences[0]} progressTotal={1} progressCompleted={speakingCompleted} onAttemptComplete={() => setSpeakingCompleted(1)} />
-        )}
+        <SpeakingGameMulti sentences={speakingList} />
         <ListeningDictation items={lesson5.sentences.slice(0, 5).map((s) => ({ japanese: s.japanese, romaji: s.romaji, vietnamese: s.vietnamese }))} onSpeak={speakJapaneseNow} title="Luyện nghe – Chép chính tả" />
 
         <WritingChallenge

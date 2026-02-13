@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { lesson3 } from '@/data/lessons/lesson3';
 import { speakJapaneseNow } from '@/lib/speakJapanese';
@@ -128,7 +129,7 @@ export default function Lesson3Page() {
   const [whereCompleted, setWhereCompleted] = useState(false);
   const [mariaCompleted, setMariaCompleted] = useState(false);
   const completedCount = (whereCompleted ? 1 : 0) + (mariaCompleted ? 1 : 0);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson3.sentences, 10));
 
   return (
     <>
@@ -491,15 +492,8 @@ export default function Lesson3Page() {
           </div>
         </section>
 
-        {/* Luyện nói – Hoàn thành 0/1 */}
-        {lesson3.sentences[0] && (
-          <SpeakingGame
-            target={lesson3.sentences[0]}
-            progressTotal={1}
-            progressCompleted={speakingCompleted}
-            onAttemptComplete={() => setSpeakingCompleted(1)}
-          />
-        )}
+        {/* Luyện nói – ~10 câu */}
+        <SpeakingGameMulti sentences={speakingList} />
 
         {/* Luyện nghe – Chép chính tả */}
         <ListeningDictation

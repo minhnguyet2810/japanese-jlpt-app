@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Đảm bảo dùng App Router (src/app)
   reactStrictMode: true,
+  async redirects() {
+    return [
+      { source: '/', destination: '/home', permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;

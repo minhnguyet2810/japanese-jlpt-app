@@ -278,7 +278,7 @@ export default function N5AdvancedClusterTestPage() {
 
   const startSpeaking = (prompt: SpeakingPrompt) => {
     if (typeof window === 'undefined') return;
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       setSpeakingComment('Trình duyệt không hỗ trợ nhận diện giọng nói. Hãy dùng Chrome.');
       return;
@@ -292,7 +292,7 @@ export default function N5AdvancedClusterTestPage() {
     recognition.interimResults = false;
     let transcript = '';
 
-    recognition.onresult = (e: any) => {
+    recognition.onresult = (e: SpeechRecognitionEvent) => {
       transcript = e.results?.[0]?.[0]?.transcript || '';
     };
     recognition.onerror = () => {

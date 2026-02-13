@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
 import { LessonNav } from '@/components/LessonNav';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { lesson6 } from '@/data/lessons/lesson6';
 import { speakJapaneseNow } from '@/lib/speakJapanese';
@@ -88,7 +89,7 @@ export default function Lesson6Page() {
 
   const [particleIndex, setParticleIndex] = useState(0);
   const [particleSelected, setParticleSelected] = useState<number | null>(null);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson6.sentences, 10));
   const currentParticle = particleQuizItems[particleIndex];
 
   const [builderIndex, setBuilderIndex] = useState(0);
@@ -548,9 +549,7 @@ export default function Lesson6Page() {
             <p className="progress-badge">Hoàn thành game 0/4</p>
           </div>
         </section>
-        {lesson6.sentences[0] && (
-          <SpeakingGame target={lesson6.sentences[0]} progressTotal={1} progressCompleted={speakingCompleted} onAttemptComplete={() => setSpeakingCompleted(1)} />
-        )}
+        <SpeakingGameMulti sentences={speakingList} />
         <ListeningDictation items={lesson6.sentences.slice(0, 5).map((s) => ({ japanese: s.japanese, romaji: s.romaji, vietnamese: s.vietnamese }))} onSpeak={speakJapaneseNow} title="Luyện nghe – Chép chính tả" />
 
         <WritingChallenge

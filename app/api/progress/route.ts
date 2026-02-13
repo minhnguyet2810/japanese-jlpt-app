@@ -89,7 +89,7 @@ export async function POST(request: Request) {
         ...(existing.games_completed as GamesCompleted),
         ...(games_completed ?? {}),
       };
-      // cast supabase sang any để tránh lỗi type infer cho update()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- type infer update/insert
       const { data: updated, error } = await (supabase as any)
         .from('user_progress')
         .update({
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
       return NextResponse.json(updated);
     }
 
-    // insert cũng không cần type chính xác → cast any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- type infer insert
     const { data: inserted, error } = await (supabase as any)
       .from('user_progress')
       .insert({

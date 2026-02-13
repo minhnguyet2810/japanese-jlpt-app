@@ -270,7 +270,7 @@ export default function N5Test2125Page() {
   function handleStartSpeaking(item: { jp: string; vi: string }) {
     if (typeof window === 'undefined') return;
     const SpeechRecognition =
-      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       setSpeakingComment('Trình duyệt không hỗ trợ nhận diện giọng nói. Thử Chrome.');
       return;
@@ -284,7 +284,7 @@ export default function N5Test2125Page() {
     recognition.continuous = true;
     recognition.interimResults = true;
     let transcript = '';
-    recognition.onresult = (e: any) => {
+    recognition.onresult = (e: SpeechRecognitionEvent) => {
       for (let i = e.resultIndex; i < e.results.length; i++) {
         transcript += e.results[i][0].transcript || '';
       }

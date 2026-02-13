@@ -61,6 +61,7 @@ export async function POST(request: Request) {
     const quiz_dialogue = Array.isArray(body.quiz_dialogue) ? body.quiz_dialogue : [];
 
     const supabase = createSupabaseAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Database type chưa khai báo lessons đủ
     const { data, error } = await (supabase as any)
       .from('lessons')
       .upsert(

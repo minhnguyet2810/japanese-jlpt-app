@@ -65,7 +65,7 @@ export function SpeakingGame({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       setSupported(false);
       setStatus('unsupported');
@@ -79,7 +79,7 @@ export function SpeakingGame({
       setStatus('unsupported');
       return;
     }
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       setStatus('unsupported');
       return;
@@ -98,14 +98,14 @@ export function SpeakingGame({
       setStatus('listening');
     };
 
-    recognition.onerror = (event: any) => {
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       setStatus('error');
       setError(event.error || 'Không ghi âm được, thử lại sau.');
     };
 
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       setStatus('processing');
-      const transcript = event.results[0][0].transcript as string;
+      const transcript = event.results[0][0].transcript;
       setRecognized(transcript);
       const pct = calcSimilarityPercent(target.japanese, transcript);
       setScore(Math.round(pct));

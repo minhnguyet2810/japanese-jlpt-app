@@ -208,6 +208,7 @@ export function KanjiRadicalLearning() {
                 <div className="radical-char jp">{r.char}</div>
                 <div className="radical-meta">
                   <span className="radical-strokes">{r.strokes} nét</span>
+                  <span className="radical-meta-sep"> · </span>
                   <span className="radical-meaning">{r.meaningVi}</span>
                 </div>
                 {(r.onyomi || r.kunyomi) && (

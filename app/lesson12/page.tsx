@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { SpeakingGame } from '@/components/SpeakingGame';
+import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
+import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import { LessonNav } from '@/components/LessonNav';
 import { useUserState } from '@/store/useUserState';
@@ -51,7 +52,7 @@ export default function Lesson12Page() {
     (gameCompleted.vocab ? 1 : 0) +
     (gameCompleted.grammar ? 1 : 0) +
     (gameCompleted.builder ? 1 : 0);
-  const [speakingCompleted, setSpeakingCompleted] = useState(0);
+  const [speakingList] = useState(() => getSpeakingSentences(lesson12.sentences, 10));
 
   const currentVocab = lesson12VocabQuizItems[vocabIndex];
   const currentGrammar = lesson12GrammarQuizItems[grammarIndex];
@@ -466,9 +467,7 @@ export default function Lesson12Page() {
           </div>
         </section>
 
-        {lesson12.sentences[0] && (
-          <SpeakingGame target={lesson12.sentences[0]} progressTotal={1} progressCompleted={speakingCompleted} onAttemptComplete={() => setSpeakingCompleted(1)} />
-        )}
+        <SpeakingGameMulti sentences={speakingList} />
 
         <ListeningDictation
           items={lesson12.sentences.slice(0, 5).map((s) => ({ japanese: s.japanese, romaji: s.romaji, vietnamese: s.vietnamese }))}

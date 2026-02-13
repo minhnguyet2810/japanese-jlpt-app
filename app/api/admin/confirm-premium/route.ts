@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     }
 
     const supabase = createSupabaseAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Database type chưa khai báo profiles đủ
     const { data, error } = await (supabase as any)
       .from('profiles')
       .update({ is_premium: true, updated_at: new Date().toISOString() })
