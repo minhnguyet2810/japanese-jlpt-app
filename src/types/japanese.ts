@@ -8,7 +8,7 @@ export interface VocabItem {
   example: string;
   exampleMeaning: string;
   level: JLPTLevel;
-  tags: string[]; // ví dụ: 'finance', 'daily', 'business'
+  tags: string[]; // ví dụ: 'daily', 'people', 'school'
 }
 
 export interface UserProgress {

@@ -40,11 +40,11 @@ begin
 end;
 $$ language plpgsql security definer;
 
--- Gắn trigger với auth.users (chỉ chạy nếu dự án đã bật Auth)
--- drop trigger if exists on_auth_user_created on auth.users;
--- create trigger on_auth_user_created
---   after insert on auth.users
---   for each row execute procedure public.handle_new_user();
+-- Gắn trigger với auth.users: mỗi khi có user đăng ký mới → tạo bản ghi profiles
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
 
 -- 2. Bảng lessons (nội dung bài học từ data/lessons)
 create table if not exists public.lessons (

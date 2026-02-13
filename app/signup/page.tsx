@@ -39,8 +39,8 @@ export default function SignupPage() {
       }
       setSuccess('Kiểm tra email để xác nhận tài khoản (hoặc đăng nhập ngay nếu đã xác thực).');
       router.refresh();
-    } catch {
-      setError('Lỗi kết nối.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lỗi kết nối. Kiểm tra mạng hoặc cấu hình Supabase.');
     }
     setLoading(false);
   };
@@ -56,8 +56,8 @@ export default function SignupPage() {
           redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
         },
       });
-    } catch {
-      setError('Lỗi kết nối.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lỗi kết nối. Kiểm tra mạng hoặc cấu hình Supabase.');
     }
     setLoading(false);
   };

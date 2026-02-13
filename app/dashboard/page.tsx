@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { LevelSelector } from '@/components/LevelSelector';
 
 const TOTAL_N5_LESSONS = 50;
@@ -16,6 +17,8 @@ const QUICK_LINKS = [
 ] as const;
 
 export default function DashboardPage() {
+  const searchParams = useSearchParams();
+  const accessDenied = searchParams.get('access') === 'denied';
   const [progressCount, setProgressCount] = useState<number | null>(null);
   const [streak, setStreak] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
@@ -70,6 +73,11 @@ export default function DashboardPage() {
         <p className="dashboard-hero-sub">Theo dõi tiến độ và bắt đầu học tiếng Nhật</p>
       </header>
 
+      {accessDenied && (
+        <div className="dashboard-error" role="alert" style={{ background: '#fef2f2', borderColor: '#fecaca', color: '#b91c1c' }}>
+          Bạn không có quyền truy cập bài 13 trở đi và Mock test. Chỉ tài khoản email được phép mới vào được.
+        </div>
+      )}
       {error && (
         <div className="dashboard-error" role="alert">
           {error}

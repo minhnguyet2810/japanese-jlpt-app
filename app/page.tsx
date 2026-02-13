@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { LevelSelector } from '@/components/LevelSelector';
 
 export default function WelcomePage() {
   return (
@@ -40,30 +39,11 @@ export default function WelcomePage() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
           <Link href="/lesson0" className="welcome-cta">
             Bắt đầu bài học →
           </Link>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-          <Link href="/kanji-radicals" className="welcome-cta secondary">
-            Kanji – Bộ thủ &amp; Phân rã
-          </Link>
-          <Link href="/pronunciation" className="welcome-cta secondary">
-            Quy tắc Phát âm
-          </Link>
-        </div>
-
-        <section className="mt-8 pt-6 border-t border-teal-900/10 level-selector-welcome">
-          <p className="text-center text-gray-600 text-[0.95rem] mb-4">
-            Sau khi mua gói VIP, bạn chọn cấp độ để học:
-          </p>
-          <LevelSelector
-            variant="cards"
-            title="Chọn cấp độ JLPT (N5 → N2)"
-            showDescription
-          />
-        </section>
       </div>
     </main>
   );

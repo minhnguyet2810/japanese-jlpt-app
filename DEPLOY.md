@@ -29,12 +29,56 @@ Xem đầy đủ trong `.env.example`.
 3. **Environment Variables**: thêm `NEXT_PUBLIC_SUPABASE_URL` và `NEXT_PUBLIC_SUPABASE_ANON_KEY` (và các biến tùy chọn nếu cần).
 4. Deploy — Vercel tự nhận Next.js và chạy `next build` + `next start`.
 
-## Supabase: cấu hình cho production
+## Supabase: cấu hình toàn bộ cho production
 
-- **Authentication → URL Configuration**: thêm **Site URL** = URL production (vd: `https://your-app.vercel.app`).
-- **Authentication → Redirect URLs**: thêm `https://your-app.vercel.app/auth/callback` (và `https://your-app.vercel.app/**` nếu cần).
+Làm lần lượt các bước dưới đây. Thiếu một bước có thể gây lỗi đăng ký/đăng nhập hoặc "Lỗi kết nối".
 
-Sau khi cấu hình xong, đăng nhập/đăng ký sẽ hoạt động trên bản deploy.
+### Bước 1: Tạo project và lấy API keys
+
+1. Vào [supabase.com](https://supabase.com) → **New Project** (đặt tên, chọn region, đặt mật khẩu DB).
+2. Khi project đã chạy: sidebar trái → **Settings** (icon bánh răng) → **API**.
+3. Copy hai giá trị:
+   - **Project URL** → dùng làm `NEXT_PUBLIC_SUPABASE_URL`
+   - **Project API keys** → **anon** **public** → dùng làm `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Khai báo vào Vercel: **Project → Settings → Environment Variables** thêm hai biến trên (và vào `.env.local` khi chạy local). Sau khi thêm/sửa env trên Vercel cần **Redeploy**.
+
+### Bước 2: Chạy schema SQL (bảng + trigger)
+
+1. Trong Supabase Dashboard: sidebar trái → **SQL Editor** → **New query**.
+2. Mở file `supabase/schema.sql` trong repo (toàn bộ nội dung).
+3. Dán vào ô SQL. Có thể chạy **Run** một lần cho toàn bộ; nếu báo lỗi (ví dụ trigger đã tồn tại), chạy từng block:
+   - **Block 1**: từ `create table if not exists public.profiles` đến hết các policy và trigger `on_auth_user_created` (đến dòng `execute procedure public.handle_new_user();`). Block này **bắt buộc** để mỗi user đăng ký mới tự động có bản ghi trong `profiles` (app dùng để lưu is_premium, và các API đọc profile).
+   - **Block 2**: bảng `lessons` + RLS.
+   - **Block 3**: bảng `user_progress` + RLS + index.
+   - **Block 4**: bảng `user_study_days` + RLS + index.
+4. Kiểm tra: **Table Editor** → phải thấy các bảng `profiles`, `lessons`, `user_progress`, `user_study_days`.
+
+### Bước 3: Bật Auth providers (Email + Google nếu dùng)
+
+1. Sidebar → **Authentication** → **Providers**.
+2. **Email**: mặc định đã bật. App dùng đăng ký/đăng nhập email + mật khẩu.
+3. **Google** (tùy chọn): nếu muốn "Đăng ký/Đăng nhập bằng Google" → bật **Google**, điền Client ID và Client Secret từ [Google Cloud Console](https://console.cloud.google.com/) (tạo OAuth 2.0 credentials, thêm redirect URI dạng `https://<project-ref>.supabase.co/auth/v1/callback` theo hướng dẫn Supabase).
+
+### Bước 4: URL Configuration (Site URL + Redirect URL)
+
+1. Sidebar → **Authentication** → **URL Configuration**.
+2. **Site URL**: đặt đúng domain production, ví dụ `https://japanese-jlpt-app.vercel.app` (không dấu `/` cuối).
+3. **Redirect URLs**: trong ô "Redirect URLs" thêm từng dòng:
+   - `https://japanese-jlpt-app.vercel.app/auth/callback`
+   - Nếu có domain khác (vd custom domain) thêm tương tự: `https://your-domain.com/auth/callback`
+   Không thêm dấu `/` thừa hoặc path sai — đăng ký/đăng nhập Google sẽ redirect về đúng URL này.
+
+### Bước 5 (tùy chọn): Tắt xác thực email để đăng nhập ngay sau đăng ký
+
+Mặc định Supabase gửi email "Confirm your signup"; user phải bấm link mới đăng nhập được. Nếu muốn **không** gửi email, đăng ký xong là đăng nhập luôn:
+
+1. Sidebar → **Authentication** → **Providers** → **Email**.
+2. Tắt **"Confirm email"** (Confirm email).
+3. Lưu. Khi đó đăng ký bằng email/mật khẩu sẽ không gửi mail xác thực, user dùng được ngay.
+
+---
+
+Sau khi làm đủ các bước trên, luồng: user **đăng ký** (email hoặc Google) → **đăng nhập** → vào **dashboard / bài học**; tiến độ lưu trên Supabase (`user_progress`, `user_study_days`).
 
 ## Quyền micro (chấm điểm Speaking)
 
@@ -62,4 +106,4 @@ Phần **chấm điểm nói (Speaking)** dùng Web Speech API và cần **quy�
 ## Còn thiếu gì không?
 
 - **Không thiếu** phần code/build để deploy.
-- **Cần làm**: tạo project Supabase (nếu chưa), khai báo đủ 2 biến Supabase trên hosting, và cấu hình Site URL + Redirect URLs trong Supabase cho domain production.
+- **Cần làm**: làm đủ **Bước 1–5** trong mục **Supabase: cấu hình toàn bộ cho production** (tạo project, chạy schema + trigger, URL Configuration, tùy chọn tắt confirm email).

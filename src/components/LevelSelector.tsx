@@ -34,7 +34,7 @@ export function LevelSelector({
       <div
         className={
           variant === 'cards'
-            ? 'flex flex-wrap gap-5 [&>a]:flex-[0_0_auto] [&>span]:flex-[0_0_auto]'
+            ? 'level-cards-grid'
             : 'flex flex-wrap gap-3 [&>a]:flex-1 [&>span]:flex-1 [&>a]:min-w-[80px] [&>span]:min-w-[80px]'
         }
       >

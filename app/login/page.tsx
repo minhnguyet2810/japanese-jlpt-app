@@ -36,8 +36,8 @@ export default function LoginPage() {
       }
       router.push(next);
       router.refresh();
-    } catch {
-      setError('Lỗi kết nối.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lỗi kết nối. Kiểm tra mạng hoặc cấu hình Supabase.');
       setLoading(false);
     }
   };
@@ -57,8 +57,8 @@ export default function LoginPage() {
         setError(err.message);
       }
       // OAuth mở tab mới hoặc redirect, không cần router.push
-    } catch {
-      setError('Lỗi kết nối.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lỗi kết nối. Kiểm tra mạng hoặc cấu hình Supabase.');
     }
     setLoading(false);
   };

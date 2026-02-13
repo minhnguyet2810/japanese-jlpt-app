@@ -5,7 +5,7 @@ import { mockVocab } from '../data/mockVocab';
 
 type SelectedLevel = JLPTLevel | 'all';
 
-export type LearningFilterTag = 'finance' | 'daily' | 'business' | 'study' | 'shopping' | 'time' | 'people' | 'home' | 'transport' | 'food' | 'school' | 'investment' | 'risk-management' | 'accounting' | 'cfa' | string;
+export type LearningFilterTag = 'daily' | 'study' | 'shopping' | 'time' | 'people' | 'home' | 'transport' | 'food' | 'school' | string;
 
 interface JapaneseState {
   vocab: VocabItem[];

@@ -7,9 +7,36 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 /** Các path yêu cầu đăng nhập. Bài 0–12 (/lesson0 ... /lesson12) KHÔNG bảo vệ — ai cũng xem được. */
 const PROTECTED_PATHS = [
   '/lesson',   // /lesson/lesson13, lesson14, ... từ DB
-  '/lesson13', // Bài 13 trở đi: cần đăng nhập (VIP để mở khóa)
-  '/n5-test', '/dashboard', '/admin-secret', '/analytics',
+  '/lesson13', '/lesson14', '/lesson15', '/lesson16', '/lesson17', '/lesson18', '/lesson19',
+  '/lesson20', '/lesson21', '/lesson22', '/lesson23', '/lesson24', '/lesson25',
+  '/n5-test', '/n5-advanced-test', '/n5-test-21-25',
+  '/dashboard', '/admin-secret', '/analytics', '/kanji-radicals', '/pronunciation',
 ];
+
+/** Bài 13 trở đi + Mock test: chỉ email trong ALLOWED_EMAILS mới vào được. */
+const LESSON_13_PLUS_OR_MOCK = [
+  '/lesson/lesson13', '/lesson/lesson14', '/lesson/lesson15', '/lesson/lesson16', '/lesson/lesson17',
+  '/lesson/lesson18', '/lesson/lesson19', '/lesson/lesson20', '/lesson/lesson21', '/lesson/lesson22',
+  '/lesson/lesson23', '/lesson/lesson24', '/lesson/lesson25',
+  '/lesson13', '/lesson14', '/lesson15', '/lesson16', '/lesson17', '/lesson18', '/lesson19',
+  '/lesson20', '/lesson21', '/lesson22', '/lesson23', '/lesson24', '/lesson25',
+  '/n5-test', '/n5-advanced-test', '/n5-test-21-25',
+];
+
+function isLesson13PlusOrMock(pathname: string): boolean {
+  return LESSON_13_PLUS_OR_MOCK.some((p) => pathname === p || pathname.startsWith(p + '/'));
+}
+
+function getAllowedEmailsSet(): Set<string> {
+  const raw = process.env.ALLOWED_EMAILS || '';
+  if (!raw.trim()) return new Set();
+  return new Set(
+    raw
+      .split(',')
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean)
+  );
+}
 
 /** Bài 0–12: không cần đăng nhập. Còn lại theo PROTECTED_PATHS. */
 function isProtectedPath(pathname: string): boolean {
@@ -43,11 +70,25 @@ export async function middleware(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (isProtectedPath(request.nextUrl.pathname)) {
+    const pathname = request.nextUrl.pathname;
+
+    if (isProtectedPath(pathname)) {
       if (!user) {
         const loginUrl = new URL('/login', request.url);
-        loginUrl.searchParams.set('next', request.nextUrl.pathname);
+        loginUrl.searchParams.set('next', pathname);
         return NextResponse.redirect(loginUrl);
+      }
+      // Bài 13 trở đi + Mock test: chỉ email trong ALLOWED_EMAILS mới được vào
+      if (isLesson13PlusOrMock(pathname)) {
+        const allowed = getAllowedEmailsSet();
+        if (allowed.size > 0) {
+          const email = (user.email || '').trim().toLowerCase();
+          if (!email || !allowed.has(email)) {
+            const denyUrl = new URL('/dashboard', request.url);
+            denyUrl.searchParams.set('access', 'denied');
+            return NextResponse.redirect(denyUrl);
+          }
+        }
       }
     }
 
