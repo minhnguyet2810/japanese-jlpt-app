@@ -1,71 +1,107 @@
 'use client';
 
 import Link from 'next/link';
-import { LevelSelector } from '@/components/LevelSelector';
+import { LessonNav } from '@/components/LessonNav';
+import { JLPT_LEVELS } from '@/lib/levels';
 
 export default function HomeGatewayPage() {
   return (
-    <main className="gateway-page">
-      <div className="gateway-inner">
-        <Link href="/" className="gateway-back">
-          <span aria-hidden>←</span> Xin chào
-        </Link>
-        <h1 className="gateway-title">Ứng dụng học tiếng Nhật JLPT</h1>
-        <p className="gateway-desc">
-          Học từ vựng, ngữ pháp N5 và luyện tập theo bài. Đăng nhập để lưu tiến độ và mở khóa đầy đủ.
-        </p>
-
-        <div className="gateway-cards">
-          <div className="gateway-card gateway-card-free">
-            <h2>Gói miễn phí</h2>
-            <p>Được học <strong>13 bài đầu N5</strong> (Bài 0 → Bài 12).</p>
-            <p className="gateway-note">Đăng nhập để lưu tiến độ.</p>
-          </div>
-          <div className="gateway-card gateway-card-vip">
-            <h2>Gói VIP</h2>
-            <p>Học <strong>tất cả các bài</strong> N5 (và mở rộng N4, N3, N2).</p>
-            <p className="gateway-note">Mua gói VIP để mở khóa toàn bộ nội dung. Sau khi mua VIP, chọn cấp độ N5 → N2 để học.</p>
-          </div>
+    <>
+      <header className="app-header">
+        <div className="app-header-inner">
+          <Link href="/home" className="app-logo">
+            日本語
+          </Link>
+          <LessonNav currentLessonId="lesson0" />
         </div>
+      </header>
 
-        <section style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>
-          <LevelSelector variant="bar" title="Chọn cấp độ để học (sau khi VIP)" showDescription />
-        </section>
+      <main className="gateway-page gateway-page--new">
+        <div className="gateway-inner gateway-inner--new">
+          {/* Hero */}
+          <section className="gateway-hero">
+            <p className="gateway-hero-greeting">Xin chào</p>
+            <h1 className="gateway-hero-title">
+              Ứng dụng học tiếng Nhật JLPT
+            </h1>
+            <p className="gateway-hero-desc">
+              Học từ vựng, ngữ pháp N5 và luyện tập theo bài. Đăng nhập để lưu tiến độ và mở khóa đầy đủ.
+            </p>
+          </section>
 
-        <div className="gateway-actions">
-          <Link href="/login" className="gateway-btn gateway-btn-primary">
-            Đăng nhập
-          </Link>
-          <Link href="/signup" className="gateway-btn gateway-btn-secondary">
-            Đăng ký
-          </Link>
-          <Link href="/lesson0" className="gateway-btn gateway-btn-outline">
-            Vào học (Bài 0–12 miễn phí)
-          </Link>
-        </div>
+          {/* Thanh chọn cấp độ: N5 / N4 N3 N2 sắp ra mắt */}
+          <section className="gateway-level-bar" aria-label="Chọn cấp độ JLPT">
+            <h2 className="gateway-level-bar-title">Chọn cấp độ để học</h2>
+            <div className="gateway-level-bar-inner">
+              {JLPT_LEVELS.map((level) =>
+                level.available ? (
+                  <Link
+                    key={level.id}
+                    href={level.startPath}
+                    className="gateway-level-item gateway-level-item--active"
+                  >
+                    <span className="gateway-level-label">{level.label}</span>
+                    {level.description && (
+                      <span className="gateway-level-desc">{level.description}</span>
+                    )}
+                  </Link>
+                ) : (
+                  <span
+                    key={level.id}
+                    className="gateway-level-item gateway-level-item--soon"
+                    aria-disabled
+                  >
+                    <span className="gateway-level-label">{level.label}</span>
+                    <span className="gateway-level-desc">Sắp ra mắt</span>
+                  </span>
+                )
+              )}
+            </div>
+          </section>
 
-        <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#f0fdf4', borderRadius: 8, border: '1px solid #bbf7d0' }}>
-          <h3 style={{ fontSize: '1rem', marginBottom: '0.75rem', color: '#166534' }}>Mock Test N5</h3>
-          <p style={{ fontSize: '0.9rem', color: '#15803d', marginBottom: '0.5rem' }}>
-            Làm đề thi thử theo nhóm bài:
+          {/* Gói học */}
+          <section className="gateway-cards-new">
+            <div className="gateway-card-new gateway-card-new--free">
+              <h3>Gói miễn phí</h3>
+              <p>13 bài đầu N5 (Bài 0 → Bài 12). Đăng nhập để lưu tiến độ.</p>
+            </div>
+            <div className="gateway-card-new gateway-card-new--vip">
+              <h3>Gói VIP</h3>
+              <p>Toàn bộ N5 và mở rộng N4, N3, N2. Mua VIP để mở khóa tất cả.</p>
+            </div>
+          </section>
+
+          {/* CTA */}
+          <div className="gateway-actions-new">
+            <Link href="/login" className="gateway-btn-new gateway-btn-new--primary">
+              Đăng nhập
+            </Link>
+            <Link href="/signup" className="gateway-btn-new gateway-btn-new--secondary">
+              Đăng ký
+            </Link>
+            <Link href="/lesson0" className="gateway-btn-new gateway-btn-new--outline">
+              Vào học (Bài 0–12 miễn phí)
+            </Link>
+          </div>
+
+          {/* Mock Test */}
+          <section className="gateway-mock-new">
+            <h3>Mock Test N5</h3>
+            <p>Làm đề thi thử theo nhóm bài:</p>
+            <div className="gateway-mock-links">
+              <Link href="/n5-test" className="gateway-mock-btn">Mock 1-14</Link>
+              <Link href="/n5-advanced-test" className="gateway-mock-btn">Mock 15-20</Link>
+              <Link href="/n5-test-21-25" className="gateway-mock-btn gateway-mock-btn--main">
+                Mock 21-25 (đề tốt nghiệp)
+              </Link>
+            </div>
+          </section>
+
+          <p className="gateway-footer-new">
+            Đã có tài khoản? Sau khi đăng nhập, vào <Link href="/dashboard">Dashboard</Link> để xem tiến độ.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <Link href="/n5-test" className="gateway-btn gateway-btn-outline" style={{ flex: '1 1 auto', minWidth: 120 }}>
-              Mock 1-14
-            </Link>
-            <Link href="/n5-advanced-test" className="gateway-btn gateway-btn-outline" style={{ flex: '1 1 auto', minWidth: 120 }}>
-              Mock 15-20
-            </Link>
-            <Link href="/n5-test-21-25" className="gateway-btn gateway-btn-outline" style={{ flex: '1 1 auto', minWidth: 120, borderColor: '#0d9488', color: '#0f766e' }}>
-              Mock 21-25 (đề tốt nghiệp)
-            </Link>
-          </div>
         </div>
-
-        <p className="gateway-footer">
-          Đã có tài khoản? Sau khi đăng nhập, vào <Link href="/dashboard">Dashboard</Link> để xem tiến độ.
-        </p>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
