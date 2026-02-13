@@ -13,7 +13,7 @@ const PROTECTED_PATHS = [
   '/dashboard', '/admin-secret', '/analytics', '/kanji-radicals', '/pronunciation',
 ];
 
-/** Bài 13 trở đi + Mock test: chỉ email trong ALLOWED_EMAILS mới vào được. */
+/** Bài 13 trở đi + Mock test: chỉ user đã đóng tiền và được xác nhận (is_premium) hoặc email trong ALLOWED_EMAILS. */
 const LESSON_13_PLUS_OR_MOCK = [
   '/lesson/lesson13', '/lesson/lesson14', '/lesson/lesson15', '/lesson/lesson16', '/lesson/lesson17',
   '/lesson/lesson18', '/lesson/lesson19', '/lesson/lesson20', '/lesson/lesson21', '/lesson/lesson22',
@@ -78,12 +78,20 @@ export async function middleware(request: NextRequest) {
         loginUrl.searchParams.set('next', pathname);
         return NextResponse.redirect(loginUrl);
       }
-      // Bài 13 trở đi + Mock test: chỉ email trong ALLOWED_EMAILS mới được vào
+      // Bài 13 trở đi + Mock test: chỉ user đã đóng tiền + xác nhận (is_premium) hoặc trong ALLOWED_EMAILS
       if (isLesson13PlusOrMock(pathname)) {
-        const allowed = getAllowedEmailsSet();
-        if (allowed.size > 0) {
-          const email = (user.email || '').trim().toLowerCase();
-          if (!email || !allowed.has(email)) {
+        const allowedEmails = getAllowedEmailsSet();
+        const emailLower = (user.email || '').trim().toLowerCase();
+        const allowedByEmail = allowedEmails.size > 0 && emailLower && allowedEmails.has(emailLower);
+
+        if (!allowedByEmail) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_premium')
+            .eq('id', user.id)
+            .single();
+          const isPremium = profile?.is_premium === true;
+          if (!isPremium) {
             const denyUrl = new URL('/dashboard', request.url);
             denyUrl.searchParams.set('access', 'denied');
             return NextResponse.redirect(denyUrl);

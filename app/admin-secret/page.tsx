@@ -17,6 +17,10 @@ export default function AdminSecretPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
+  const [confirmEmail, setConfirmEmail] = useState('');
+  const [confirmStatus, setConfirmStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [confirmMessage, setConfirmMessage] = useState('');
+
   const handlePublish = async () => {
     if (!adminSecret.trim()) {
       setMessage('Nhập Admin Secret');
@@ -65,6 +69,44 @@ export default function AdminSecretPage() {
     } catch (e) {
       setMessage(e instanceof Error ? e.message : 'Lỗi kết nối');
       setStatus('error');
+    }
+  };
+
+  const handleConfirmPremium = async () => {
+    if (!adminSecret.trim()) {
+      setConfirmMessage('Nhập Admin Secret ở trên');
+      setConfirmStatus('error');
+      return;
+    }
+    const email = confirmEmail.trim();
+    if (!email) {
+      setConfirmMessage('Nhập email user cần xác nhận đã đóng tiền');
+      setConfirmStatus('error');
+      return;
+    }
+    setConfirmStatus('loading');
+    setConfirmMessage('');
+    try {
+      const res = await fetch('/api/admin/confirm-premium', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-secret': adminSecret.trim(),
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setConfirmMessage(data.error || `Lỗi ${res.status}`);
+        setConfirmStatus('error');
+        return;
+      }
+      setConfirmMessage(data.message || 'Đã xác nhận VIP.');
+      setConfirmStatus('success');
+      setConfirmEmail('');
+    } catch (e) {
+      setConfirmMessage(e instanceof Error ? e.message : 'Lỗi kết nối');
+      setConfirmStatus('error');
     }
   };
 
@@ -179,6 +221,39 @@ export default function AdminSecretPage() {
           {message && (
             <div className={`admin-feedback ${status === 'error' ? 'error' : 'success'}`}>
               {message}
+            </div>
+          )}
+        </div>
+
+        <hr style={{ margin: '2rem 0', border: 'none', borderTop: '1px solid #e5e7eb' }} />
+
+        <h2 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>Xác nhận đã đóng tiền (VIP)</h2>
+        <p className="admin-hint" style={{ marginBottom: '1rem' }}>
+          Sau khi user chuyển khoản, nhập đúng email tài khoản của họ và bấm Xác nhận. User đó sẽ được học bài 13 trở đi và làm Mock test.
+        </p>
+        <div className="admin-form">
+          <div className="admin-row">
+            <label>Email user đã đóng tiền</label>
+            <input
+              type="email"
+              value={confirmEmail}
+              onChange={(e) => setConfirmEmail(e.target.value)}
+              placeholder="user@example.com"
+            />
+          </div>
+          <div className="admin-actions">
+            <button
+              type="button"
+              className="admin-publish"
+              onClick={handleConfirmPremium}
+              disabled={confirmStatus === 'loading'}
+            >
+              {confirmStatus === 'loading' ? 'Đang xử lý...' : 'Xác nhận VIP'}
+            </button>
+          </div>
+          {confirmMessage && (
+            <div className={`admin-feedback ${confirmStatus === 'error' ? 'error' : 'success'}`}>
+              {confirmMessage}
             </div>
           )}
         </div>

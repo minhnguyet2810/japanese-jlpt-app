@@ -65,10 +65,7 @@ export async function POST(request: NextRequest) {
   const hasGemini = !!GEMINI_API_KEY;
   if (!hasOpenAI && !hasGemini) {
     return NextResponse.json(
-      {
-        error:
-          'Chưa cấu hình AI. Thêm GEMINI_API_KEY hoặc OPENAI_API_KEY vào .env.local.',
-      },
+      { error: 'Tính năng chấm nói bằng AI tạm thời chưa khả dụng.', code: 'ai_unconfigured' },
       { status: 503 }
     );
   }

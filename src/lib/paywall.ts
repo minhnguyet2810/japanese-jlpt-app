@@ -5,11 +5,9 @@
 export const FREE_LESSON_NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 const FREE_SET = new Set(FREE_LESSON_NUMBERS);
 
-/** lessonId: "lesson0" | "lesson1" | ... | "lesson12" | "n5-test" */
+/** lessonId: "lesson0" ... "lesson12" = free. Bài 13+, Mock test = cần đóng tiền + xác nhận (is_premium). */
 export function isLessonFree(lessonId: string): boolean {
-  if (lessonId === 'n5-test') return true; // N5 test miễn phí
-  if (lessonId === 'n5-advanced-test') return true; // đề tổng hợp nâng cao mở để luyện
-  if (lessonId === 'n5-test-21-25') return true; // Mock Bài 21–25 (đề tốt nghiệp N5)
+  if (lessonId === 'n5-test' || lessonId === 'n5-advanced-test' || lessonId === 'n5-test-21-25') return false; // Mock test chỉ VIP
   const num = parseInt(lessonId.replace('lesson', ''), 10);
   if (Number.isNaN(num)) return false;
   return FREE_SET.has(num as (typeof FREE_LESSON_NUMBERS)[number]);

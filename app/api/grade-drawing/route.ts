@@ -49,7 +49,7 @@ function parseGradeDrawingResponse(content: string): GradeDrawingResult {
 export async function POST(request: NextRequest) {
   if (!GEMINI_API_KEY && !OPENAI_API_KEY) {
     return NextResponse.json(
-      { error: 'Chưa cấu hình AI. Thêm GEMINI_API_KEY hoặc OPENAI_API_KEY vào .env.local.' },
+      { error: 'Tính năng chấm bài bằng AI tạm thời chưa khả dụng.', code: 'ai_unconfigured' },
       { status: 503 }
     );
   }

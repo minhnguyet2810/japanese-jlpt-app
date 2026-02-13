@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
   if (!hasOpenAI && !hasGemini) {
     return NextResponse.json(
       {
-        error:
-          'Chưa cấu hình AI. Thêm vào .env.local: GEMINI_API_KEY=... (miễn phí, lấy tại aistudio.google.com/apikey) hoặc OPENAI_API_KEY=sk-...',
+        error: 'Tính năng chấm bài bằng AI tạm thời chưa khả dụng. Vui lòng thử lại sau.',
+        code: 'ai_unconfigured',
       },
       { status: 503 }
     );

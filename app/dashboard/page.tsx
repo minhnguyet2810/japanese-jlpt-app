@@ -75,7 +75,7 @@ export default function DashboardPage() {
 
       {accessDenied && (
         <div className="dashboard-error" role="alert" style={{ background: '#fef2f2', borderColor: '#fecaca', color: '#b91c1c' }}>
-          Bạn không có quyền truy cập bài 13 trở đi và Mock test. Chỉ tài khoản email được phép mới vào được.
+          Bạn chỉ được học 12 bài đầu và không được làm Mock test. Để học bài 13 trở đi và làm Mock test, vui lòng đóng phí và chờ admin xác nhận (sau khi xác nhận tài khoản sẽ được mở khóa).
         </div>
       )}
       {error && (

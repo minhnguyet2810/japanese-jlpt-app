@@ -54,7 +54,10 @@ export default function WritingChallenge({
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || `Lỗi ${res.status}`);
+        const msg = data?.code === 'ai_unconfigured' || res.status === 503
+          ? 'Tính năng chấm bài bằng AI tạm thời chưa khả dụng. Bạn vẫn có thể tự viết và luyện tập.'
+          : (data?.error || `Lỗi ${res.status}`);
+        setError(msg);
         return;
       }
       setResult(data as GradeWritingResult);
