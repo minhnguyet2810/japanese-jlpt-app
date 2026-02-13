@@ -38,41 +38,43 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className="auth-page" style={{ padding: '2rem', maxWidth: 400, margin: '0 auto' }}>
-      <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Quên mật khẩu</h1>
-      <p style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-        Nhập email bạn đã dùng để đăng ký. Chúng tôi sẽ gửi link đặt lại mật khẩu vào Gmail (kiểm tra cả thư mục spam).
-      </p>
+    <main className="auth-page">
+      <div className="auth-card">
+        <h1>Quên mật khẩu</h1>
+        <p className="auth-desc">
+          Nhập email đăng ký. Chúng tôi sẽ gửi link đặt lại mật khẩu (kiểm tra cả thư mục spam).
+        </p>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div>
-          <label htmlFor="email" style={{ display: 'block', fontWeight: 600, marginBottom: '0.35rem' }}>
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="auth-input"
-            autoComplete="email"
-            disabled={loading}
-          />
-        </div>
-        {error && <p style={{ color: '#b91c1c', fontSize: '0.875rem', margin: 0 }}>{error}</p>}
-        {success && <p style={{ color: '#166534', fontSize: '0.875rem', margin: 0 }}>{success}</p>}
-        <button type="submit" className="auth-btn" disabled={loading}>
-          {loading ? 'Đang gửi...' : 'Gửi link đặt lại mật khẩu'}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+          <div>
+            <label htmlFor="email" style={{ display: 'block', fontWeight: 600, marginBottom: '0.35rem', fontSize: '0.9rem', color: '#374151' }}>
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="auth-input"
+              autoComplete="email"
+              disabled={loading}
+            />
+          </div>
+          {error && <p style={{ color: '#b91c1c', fontSize: '0.875rem', margin: 0 }}>{error}</p>}
+          {success && <p style={{ color: '#166534', fontSize: '0.875rem', margin: 0 }}>{success}</p>}
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Đang gửi...' : 'Gửi link đặt lại mật khẩu'}
+          </button>
+        </form>
 
-      <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: '#6b7280' }}>
-        <Link href="/login" style={{ color: '#166534', fontWeight: 600 }}>← Quay lại đăng nhập</Link>
-      </p>
-      <p style={{ marginTop: '0.5rem' }}>
-        <Link href="/" style={{ color: '#6b7280', fontSize: '0.875rem' }}>Về trang chủ</Link>
-      </p>
+        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: '#64748b', textAlign: 'center' }}>
+          <Link href="/login" style={{ color: '#0d9488', fontWeight: 600 }}>← Quay lại đăng nhập</Link>
+        </p>
+        <p style={{ marginTop: '0.75rem', textAlign: 'center' }}>
+          <Link href="/" style={{ color: '#94a3b8', fontSize: '0.875rem' }}>Về trang chủ</Link>
+        </p>
+      </div>
     </main>
   );
 }

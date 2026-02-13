@@ -3,17 +3,14 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { LevelSelector } from '@/components/LevelSelector';
 
-const TOTAL_N5_LESSONS = 50;
+const TOTAL_N5_LESSONS = 25;
 
 const QUICK_LINKS = [
   { href: '/', label: 'Trang chủ', icon: '🏠' },
   { href: '/lesson0', label: 'Bắt đầu học (Bài 0)', icon: '📖' },
-  { href: '/lesson/lesson13', label: 'Bài 13 (từ CMS)', icon: '📚' },
   { href: '/kanji-radicals', label: 'Kanji – Bộ thủ & Phân rã', icon: '✒️' },
   { href: '/pronunciation', label: 'Quy tắc Phát âm', icon: '🎤' },
-  { href: '/analytics', label: 'Phân tích học tập', icon: '📊' },
 ] as const;
 
 export default function DashboardPage() {
@@ -69,8 +66,8 @@ export default function DashboardPage() {
   return (
     <main className="dashboard-page">
       <header className="dashboard-hero">
-        <h1 className="dashboard-hero-title">Dashboard</h1>
-        <p className="dashboard-hero-sub">Theo dõi tiến độ và bắt đầu học tiếng Nhật</p>
+        <h1 className="dashboard-hero-title">Bảng điều khiển</h1>
+        <p className="dashboard-hero-sub">Tiến độ N5 và đường dẫn nhanh</p>
       </header>
 
       {accessDenied && (
@@ -83,21 +80,6 @@ export default function DashboardPage() {
           {error}
         </div>
       )}
-
-      <section className="dashboard-card">
-        <h2 className="dashboard-card-title">
-          <span className="dashboard-card-title-icon">📂</span>
-          Chọn cấp độ để học (VIP)
-        </h2>
-        <LevelSelector
-          variant="cards"
-          title=""
-          showDescription
-        />
-        <p className="dashboard-level-note">
-          N5 đang mở; N4, N3, N2 sẽ ra mắt sau.
-        </p>
-      </section>
 
       <section className="dashboard-card">
         <h2 className="dashboard-card-title">
@@ -134,7 +116,7 @@ export default function DashboardPage() {
       <section className="dashboard-card">
         <h2 className="dashboard-card-title">
           <span className="dashboard-card-title-icon">🔗</span>
-          Đi tới
+          Đi nhanh
         </h2>
         <div className="dashboard-links-grid">
           {QUICK_LINKS.map((item) => (
