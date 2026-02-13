@@ -39,10 +39,13 @@ export default function WelcomePage() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.25rem', flexDirection: 'column', alignItems: 'center' }}>
           <Link href="/lesson0" className="welcome-cta">
             Bắt đầu bài học →
           </Link>
+          <p style={{ margin: 0, fontSize: '0.875rem', color: '#6b7280' }}>
+            Bạn cần đăng ký hoặc đăng nhập để vào bài học.
+          </p>
         </div>
       </div>
     </main>
