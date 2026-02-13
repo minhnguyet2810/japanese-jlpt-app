@@ -65,8 +65,9 @@ Làm lần lượt các bước dưới đây. Thiếu một bước có thể g
 2. **Site URL**: đặt đúng domain production, ví dụ `https://japanese-jlpt-app.vercel.app` (không dấu `/` cuối).
 3. **Redirect URLs**: trong ô "Redirect URLs" thêm từng dòng:
    - `https://japanese-jlpt-app.vercel.app/auth/callback`
-   - Nếu có domain khác (vd custom domain) thêm tương tự: `https://your-domain.com/auth/callback`
-   Không thêm dấu `/` thừa hoặc path sai — đăng ký/đăng nhập Google sẽ redirect về đúng URL này.
+   - `https://japanese-jlpt-app.vercel.app/update-password` (cho tính năng Quên mật khẩu)
+   - Nếu có domain khác (vd custom domain) thêm tương tự: `https://your-domain.com/auth/callback` và `https://your-domain.com/update-password`
+   Không thêm dấu `/` thừa hoặc path sai — đăng ký/đăng nhập Google và link đặt lại mật khẩu sẽ redirect về đúng URL này.
 
 ### Bước 5 (tùy chọn): Tắt xác thực email để đăng nhập ngay sau đăng ký
 

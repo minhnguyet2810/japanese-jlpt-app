@@ -41,7 +41,7 @@ function getAllowedEmailsSet(): Set<string> {
 /** Bài 0–12: không cần đăng nhập. Còn lại theo PROTECTED_PATHS. */
 function isProtectedPath(pathname: string): boolean {
   if (pathname === '/') return false;
-  if (pathname === '/login' || pathname === '/signup') return false;
+  if (pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password' || pathname === '/update-password') return false;
   if (pathname.startsWith('/api')) return false;
   if (/^\/lesson(0|1|2|3|4|5|6|7|8|9|10|11|12)(\/|$)/.test(pathname)) return false; // Bài 0–12 miễn phí, không yêu cầu login
   return PROTECTED_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'));

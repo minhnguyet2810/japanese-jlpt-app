@@ -100,6 +100,9 @@ export default function LoginPage() {
             autoComplete="current-password"
             disabled={loading}
           />
+          <p style={{ marginTop: '0.35rem', marginBottom: 0 }}>
+            <Link href="/forgot-password" style={{ fontSize: '0.875rem', color: '#6b7280' }}>Quên mật khẩu?</Link>
+          </p>
         </div>
         {error && <p style={{ color: '#b91c1c', fontSize: '0.875rem', margin: 0 }}>{error}</p>}
         <button type="submit" className="auth-btn" disabled={loading}>
