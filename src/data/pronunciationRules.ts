@@ -237,3 +237,86 @@ export const BEAT_PATTERNS: BeatPattern[] = [
   { label: 'Âm ngắt (4 phách)', japanese: 'きって', romaji: 'kitte', beats: ['short', 'pause', 'short', 'short'], description: 'ki-(pause)-t-te' },
   { label: 'Trường + ngắt', japanese: 'がっこう', romaji: 'gakkō', beats: ['short', 'pause', 'short', 'long'], description: 'ga-(pause)-k-kou' },
 ];
+
+// —— Cao độ (Pitch accent): từ đọc giống nhau nhưng cao độ khác nhau = nghĩa khác ——
+
+export interface PitchAccentPair {
+  /** Cách viết giống nhau (hiragana/kanji) */
+  japanese: string;
+  romaji: string;
+  /** Nghĩa 1 + mô tả cao độ (vd: cao ở âm đầu) */
+  meaning1: string;
+  pitch1: string;
+  /** Nghĩa 2 + mô tả cao độ */
+  meaning2: string;
+  pitch2: string;
+  note?: string;
+}
+
+export const PITCH_ACCENT_PAIRS: PitchAccentPair[] = [
+  {
+    japanese: 'はし',
+    romaji: 'hashi',
+    meaning1: '箸 — đũa',
+    pitch1: 'Cao ở âm 1 (háshi)',
+    meaning2: '橋 — cầu',
+    pitch2: 'Cao ở âm 2 (hashí)',
+    note: 'Cùng âm, khác cao độ → khác nghĩa hoàn toàn.',
+  },
+  {
+    japanese: 'あめ',
+    romaji: 'ame',
+    meaning1: '雨 — mưa',
+    pitch1: 'Cao ở âm 1 (áme)',
+    meaning2: '飴 — kẹo',
+    pitch2: 'Cao ở âm 2 (amé)',
+  },
+  {
+    japanese: 'かき',
+    romaji: 'kaki',
+    meaning1: '柿 — quả hồng',
+    pitch1: 'Cao ở âm 1 (káki)',
+    meaning2: '牡蠣 — con hàu',
+    pitch2: 'Cao ở âm 2 (kakí)',
+  },
+  {
+    japanese: 'はな',
+    romaji: 'hana',
+    meaning1: '花 — hoa',
+    pitch1: 'Cao ở âm 1 (hána)',
+    meaning2: '鼻 — mũi',
+    pitch2: 'Cao ở âm 2 (haná)',
+  },
+  {
+    japanese: 'きる',
+    romaji: 'kiru',
+    meaning1: '切る — cắt',
+    pitch1: 'Cao ở âm 1 (kíru)',
+    meaning2: '着る — mặc',
+    pitch2: 'Cao ở âm 2 (kirú)',
+  },
+  {
+    japanese: 'いま',
+    romaji: 'ima',
+    meaning1: '今 — bây giờ',
+    pitch1: 'Cao ở âm 1 (íma)',
+    meaning2: '居間 — phòng khách',
+    pitch2: 'Cao ở âm 2 (imá)',
+  },
+  {
+    japanese: 'にわ',
+    romaji: 'niwa',
+    meaning1: '庭 — vườn',
+    pitch1: 'Cao ở âm 1 (níwa)',
+    meaning2: '二羽 — 2 con (chim/thú)',
+    pitch2: 'Cao ở âm 2 (niwá)',
+  },
+  {
+    japanese: 'あさ',
+    romaji: 'asa',
+    meaning1: '朝 — buổi sáng',
+    pitch1: 'Cao ở âm 1 (ása)',
+    meaning2: '麻 — gai, lanh',
+    pitch2: 'Cao ở âm 2 (asá)',
+  },
+];

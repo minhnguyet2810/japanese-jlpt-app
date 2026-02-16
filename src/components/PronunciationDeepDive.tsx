@@ -12,13 +12,15 @@ import {
   ROMAJI_VARIANTS,
   MINNA_PRONUNCIATION_WORDS,
   BEAT_PATTERNS,
+  PITCH_ACCENT_PAIRS,
 } from '@/data/pronunciationRules';
 
-type TabId = 'chouon' | 'sokuon' | 'waveform' | 'ai-check' | 'minna' | 'romaji';
+type TabId = 'chouon' | 'sokuon' | 'pitch' | 'waveform' | 'ai-check' | 'minna' | 'romaji';
 
 const TABS: { id: TabId; label: string }[] = [
   { id: 'chouon', label: 'Trường âm (長音)' },
   { id: 'sokuon', label: 'Âm ngắt (促音)' },
+  { id: 'pitch', label: 'Cao độ (高低)' },
   { id: 'waveform', label: 'Nhịp điệu' },
   { id: 'ai-check', label: 'Kiểm tra phát âm' },
   { id: 'minna', label: 'Bài tập Minna 1–15' },
@@ -229,6 +231,41 @@ export function PronunciationDeepDive() {
                   </div>
                   <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.withSokuon.japanese)}>🔊</button>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'pitch' && (
+        <div className="pronunciation-panel">
+          <h3 className="pronunciation-heading">Từ đọc giống nhau nhưng cao độ khác nhau</h3>
+          <p className="pronunciation-note">
+            Trong tiếng Nhật, nhiều từ viết giống nhau (cùng hiragana) nhưng khi đọc cao độ (pitch) khác nhau thì nghĩa khác hẳn. Nghe kỹ để phân biệt.
+          </p>
+          <div className="pronunciation-pairs pitch-accent-pairs">
+            {PITCH_ACCENT_PAIRS.map((pair, i) => (
+              <div key={i} className="pronunciation-pair-card pitch-accent-card">
+                <div className="pitch-accent-word">
+                  <span className="jp">{pair.japanese}</span>
+                  <span className="romaji">({pair.romaji})</span>
+                  <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.japanese)} title="Nghe">🔊</button>
+                </div>
+                <div className="pair-row">
+                  <div>
+                    <span className="pair-label">Nghĩa 1</span>
+                    <div className="vi">{pair.meaning1}</div>
+                    <div className="pitch-desc">{pair.pitch1}</div>
+                  </div>
+                </div>
+                <div className="pair-row">
+                  <div>
+                    <span className="pair-label">Nghĩa 2</span>
+                    <div className="vi">{pair.meaning2}</div>
+                    <div className="pitch-desc">{pair.pitch2}</div>
+                  </div>
+                </div>
+                {pair.note && <p className="pronunciation-tip">{pair.note}</p>}
               </div>
             ))}
           </div>

@@ -1598,6 +1598,22 @@ main {
   color: #0f766e;
   margin: 0.5rem 0 0;
 }
+/* Cao độ (pitch accent): từ đọc giống nhau, cao độ khác = nghĩa khác */
+.pitch-accent-pairs { margin-top: 0.75rem; }
+.pitch-accent-card .pitch-accent-word {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.pitch-accent-card .pitch-accent-word .jp { font-size: 1.25rem; font-weight: 600; }
+.pitch-accent-card .pitch-desc {
+  font-size: 0.8rem;
+  color: #0d9488;
+  margin-top: 0.2rem;
+}
 .pronunciation-bullets {
   margin: 0 0 1rem 1.25rem;
   color: #374151;
