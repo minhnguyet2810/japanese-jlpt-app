@@ -249,7 +249,7 @@ export function PronunciationDeepDive() {
                 <div className="pitch-accent-word">
                   <span className="jp">{pair.japanese}</span>
                   <span className="romaji">({pair.romaji})</span>
-                  <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.japanese)} title="Nghe">🔊</button>
+                  <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.japanese)} title="Nghe cả từ">🔊</button>
                 </div>
                 <div className="pair-row">
                   <div>
@@ -257,6 +257,7 @@ export function PronunciationDeepDive() {
                     <div className="vi">{pair.meaning1}</div>
                     <div className="pitch-desc">{pair.pitch1}</div>
                   </div>
+                  <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.word1 ?? pair.japanese)} title="Nghe cách đọc nghĩa 1">🔊</button>
                 </div>
                 <div className="pair-row">
                   <div>
@@ -264,6 +265,7 @@ export function PronunciationDeepDive() {
                     <div className="vi">{pair.meaning2}</div>
                     <div className="pitch-desc">{pair.pitch2}</div>
                   </div>
+                  <button type="button" className="listen-btn-small" onClick={() => speakJapaneseNow(pair.word2 ?? pair.japanese)} title="Nghe cách đọc nghĩa 2">🔊</button>
                 </div>
                 {pair.note && <p className="pronunciation-tip">{pair.note}</p>}
               </div>

@@ -241,15 +241,16 @@ export const BEAT_PATTERNS: BeatPattern[] = [
 // —— Cao độ (Pitch accent): từ đọc giống nhau nhưng cao độ khác nhau = nghĩa khác ——
 
 export interface PitchAccentPair {
-  /** Cách viết giống nhau (hiragana/kanji) */
+  /** Cách viết giống nhau (hiragana) */
   japanese: string;
   romaji: string;
-  /** Nghĩa 1 + mô tả cao độ (vd: cao ở âm đầu) */
   meaning1: string;
   pitch1: string;
-  /** Nghĩa 2 + mô tả cao độ */
+  /** Chữ dùng để phát âm cho nghĩa 1 (kanji), có nút loa riêng */
+  word1?: string;
   meaning2: string;
   pitch2: string;
+  word2?: string;
   note?: string;
 }
 
@@ -259,8 +260,10 @@ export const PITCH_ACCENT_PAIRS: PitchAccentPair[] = [
     romaji: 'hashi',
     meaning1: '箸 — đũa',
     pitch1: 'Cao ở âm 1 (háshi)',
+    word1: '箸',
     meaning2: '橋 — cầu',
     pitch2: 'Cao ở âm 2 (hashí)',
+    word2: '橋',
     note: 'Cùng âm, khác cao độ → khác nghĩa hoàn toàn.',
   },
   {
@@ -268,55 +271,69 @@ export const PITCH_ACCENT_PAIRS: PitchAccentPair[] = [
     romaji: 'ame',
     meaning1: '雨 — mưa',
     pitch1: 'Cao ở âm 1 (áme)',
+    word1: '雨',
     meaning2: '飴 — kẹo',
     pitch2: 'Cao ở âm 2 (amé)',
+    word2: '飴',
   },
   {
     japanese: 'かき',
     romaji: 'kaki',
     meaning1: '柿 — quả hồng',
     pitch1: 'Cao ở âm 1 (káki)',
+    word1: '柿',
     meaning2: '牡蠣 — con hàu',
     pitch2: 'Cao ở âm 2 (kakí)',
+    word2: '牡蠣',
   },
   {
     japanese: 'はな',
     romaji: 'hana',
     meaning1: '花 — hoa',
     pitch1: 'Cao ở âm 1 (hána)',
+    word1: '花',
     meaning2: '鼻 — mũi',
     pitch2: 'Cao ở âm 2 (haná)',
+    word2: '鼻',
   },
   {
     japanese: 'きる',
     romaji: 'kiru',
     meaning1: '切る — cắt',
     pitch1: 'Cao ở âm 1 (kíru)',
+    word1: '切る',
     meaning2: '着る — mặc',
     pitch2: 'Cao ở âm 2 (kirú)',
+    word2: '着る',
   },
   {
     japanese: 'いま',
     romaji: 'ima',
     meaning1: '今 — bây giờ',
     pitch1: 'Cao ở âm 1 (íma)',
+    word1: '今',
     meaning2: '居間 — phòng khách',
     pitch2: 'Cao ở âm 2 (imá)',
+    word2: '居間',
   },
   {
     japanese: 'にわ',
     romaji: 'niwa',
     meaning1: '庭 — vườn',
     pitch1: 'Cao ở âm 1 (níwa)',
+    word1: '庭',
     meaning2: '二羽 — 2 con (chim/thú)',
     pitch2: 'Cao ở âm 2 (niwá)',
+    word2: '二羽',
   },
   {
     japanese: 'あさ',
     romaji: 'asa',
     meaning1: '朝 — buổi sáng',
     pitch1: 'Cao ở âm 1 (ása)',
+    word1: '朝',
     meaning2: '麻 — gai, lanh',
     pitch2: 'Cao ở âm 2 (asá)',
+    word2: '麻',
   },
 ];
