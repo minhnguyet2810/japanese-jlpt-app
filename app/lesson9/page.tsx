@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import ListeningDictation from '@/components/ListeningDictation';
 import { getSpeakingSentences } from '@/data/speakingPool';
@@ -48,13 +48,9 @@ export default function Lesson9Page() {
   const [speakingList] = useState(() => getSpeakingSentences(lesson9.sentences, 10));
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson9" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson9" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -421,6 +417,7 @@ export default function Lesson9Page() {
           </div>
         </section>
       </main>
-    </>
+    </div>
+    </div>
   );
 }

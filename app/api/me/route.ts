@@ -11,7 +11,7 @@ export async function GET() {
       return NextResponse.json({ user: null, profile: null }, { status: 200 });
     }
     return NextResponse.json({
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, full_name: user.full_name },
       profile: { is_premium: user.is_premium },
     });
   } catch (err) {

@@ -44,6 +44,7 @@ export async function createSupabaseServerClient() {
 export async function getCurrentUserAndProfile(): Promise<{
   id: string;
   email: string | null;
+  full_name?: string;
   is_premium: boolean;
 } | null> {
   const supabase = await createSupabaseServerClient();
@@ -62,6 +63,7 @@ export async function getCurrentUserAndProfile(): Promise<{
   return {
     id: user.id,
     email: user.email ?? null,
+    full_name: user.user_metadata?.full_name,
     is_premium: profile?.is_premium ?? false,
   };
 }

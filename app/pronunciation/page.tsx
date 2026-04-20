@@ -1,17 +1,13 @@
 'use client';
 
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { PronunciationDeepDive } from '@/components/PronunciationDeepDive';
 
 export default function PronunciationPage() {
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="pronunciation" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="pronunciation" />
+      <div className="sb-content">
       <main className="lesson-page">
         <section className="lesson-hero">
           <h1 className="lesson-title">Chuyên sâu Quy tắc Phát âm</h1>
@@ -21,6 +17,7 @@ export default function PronunciationPage() {
         </section>
         <PronunciationDeepDive />
       </main>
-    </>
+    </div>
+    </div>
   );
 }

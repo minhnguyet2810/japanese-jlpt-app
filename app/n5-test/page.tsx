@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import {
   n5MockTestQuestions,
   type N5TestQuestion,
@@ -668,13 +668,9 @@ export default function N5TestPage() {
   }
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="n5-test" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="n5-test" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -1155,7 +1151,7 @@ export default function N5TestPage() {
           />
         </div>
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

@@ -10,6 +10,7 @@ export default function SignupPage() {
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/dashboard';
 
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,8 +21,8 @@ export default function SignupPage() {
     e.preventDefault();
     setError('');
     setSuccess('');
-    if (!email.trim() || !password || password.length < 6) {
-      setError('Vui lòng nhập email và mật khẩu (tối thiểu 6 ký tự).');
+    if (!fullName.trim() || !email.trim() || !password || password.length < 6) {
+      setError('Vui lòng nhập họ tên, email và mật khẩu (tối thiểu 6 ký tự).');
       return;
     }
     setLoading(true);
@@ -30,7 +31,10 @@ export default function SignupPage() {
       const { error: err } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+        options: { 
+          data: { full_name: fullName.trim() },
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` 
+        },
       });
       if (err) {
         setError(err.message);
@@ -69,6 +73,21 @@ export default function SignupPage() {
         <p className="auth-desc">Tạo tài khoản để lưu tiến độ và học đầy đủ bài</p>
 
         <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+          <div>
+            <label htmlFor="fullName" style={{ display: 'block', fontWeight: 600, marginBottom: '0.35rem', fontSize: '0.9rem', color: '#374151' }}>
+              Họ và tên
+            </label>
+            <input
+              id="fullName"
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Nguyễn Văn A"
+              className="auth-input"
+              autoComplete="name"
+              disabled={loading}
+            />
+          </div>
           <div>
             <label htmlFor="email" style={{ display: 'block', fontWeight: 600, marginBottom: '0.35rem', fontSize: '0.9rem', color: '#374151' }}>
               Email

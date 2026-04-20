@@ -5,7 +5,7 @@ import WritingChallenge from '@/components/WritingChallenge';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { useUserState } from '@/store/useUserState';
 import {
   lesson12,
@@ -65,13 +65,9 @@ export default function Lesson12Page() {
   const builderOptions = [...currentBuilder.tokens].sort();
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson12" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson12" />
+      <div className="sb-content">
 
       {isLocked ? (
         <main className="lesson-page" style={{ padding: '2rem', textAlign: 'center' }}>
@@ -492,6 +488,7 @@ export default function Lesson12Page() {
         />
       </main>
       )}
-    </>
+    </div>
+    </div>
   );
 }

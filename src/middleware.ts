@@ -37,7 +37,7 @@ function isProtectedPath(pathname: string): boolean {
   return PROTECTED_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'));
 }
 
-const PUBLIC_PATHS = ['/', '/login', '/signup', '/forgot-password', '/update-password'];
+const PUBLIC_PATHS = ['/', '/home', '/login', '/signup', '/forgot-password', '/update-password'];
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

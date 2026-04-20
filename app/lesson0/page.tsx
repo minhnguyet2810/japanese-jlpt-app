@@ -2,20 +2,16 @@
 
 import { comboKana, lesson0, voicedKana } from '@/data/lessons/lesson0';
 import { KanaFlashcards } from '@/components/KanaFlashcards';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { KanaQuizGame } from '@/components/KanaQuizGame';
 import { KanaExtraQuizGame } from '@/components/KanaExtraQuizGame';
 import { speakJapaneseNow } from '@/lib/speakJapanese';
 
 export default function Lesson0Page() {
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson0" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson0" />
+      <div className="sb-content">
       <main className="lesson-page">
         <section className="lesson-hero">
           <h1 className="lesson-title">Bài 0: Bảng chữ cái</h1>
@@ -194,10 +190,7 @@ export default function Lesson0Page() {
           </div>
         </section>
       </main>
-    </>
+      </div>
+    </div>
   );
 }
-
-
-
-

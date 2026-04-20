@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -128,13 +128,9 @@ export default function Lesson2Page() {
   const [speakingList] = useState(() => getSpeakingSentences(lesson2.sentences, 10));
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson2" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson2" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -598,7 +594,7 @@ export default function Lesson2Page() {
           grammarContext="これ・それ・あれ, この・その・あの N, N1 の N2"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

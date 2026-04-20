@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -103,13 +103,9 @@ export default function Lesson6Page() {
   const builderOptions = [...currentBuilder.tokens].sort();
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson6" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson6" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -568,7 +564,7 @@ export default function Lesson6Page() {
           grammarContext="N を V, N（địa điểm）で V, Vませんか, Vましょう"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

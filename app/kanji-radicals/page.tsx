@@ -1,17 +1,13 @@
 'use client';
 
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { KanjiRadicalLearning } from '@/components/KanjiRadicalLearning';
 
 export default function KanjiRadicalsPage() {
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="kanji-radicals" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="kanji-radicals" />
+      <div className="sb-content">
       <main className="lesson-page">
         <section className="lesson-hero">
           <h1 className="lesson-title">Học Kanji – Bộ thủ &amp; Phân rã</h1>
@@ -21,6 +17,7 @@ export default function KanjiRadicalsPage() {
         </section>
         <KanjiRadicalLearning />
       </main>
-    </>
+    </div>
+    </div>
   );
 }

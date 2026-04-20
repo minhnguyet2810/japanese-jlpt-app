@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { useUserState } from '@/store/useUserState';
 import { lesson15, lesson15GrammarQuizItems } from '@/data/lessons/lesson15';
 import { lesson16, lesson16GrammarQuizItems } from '@/data/lessons/lesson16';
@@ -353,13 +353,9 @@ export default function N5AdvancedClusterTestPage() {
 
   if (isLocked) {
     return (
-      <>
-        <header className="app-header">
-          <div className="app-header-inner">
-            <span className="app-logo">日本語</span>
-            <LessonNav currentLessonId="n5-advanced-test" />
-          </div>
-        </header>
+      <div className="sb-layout">
+      <Sidebar currentLessonId="n5-advanced-test" />
+      <div className="sb-content">
         <main className="lesson-page" style={{ padding: '2rem', textAlign: 'center' }}>
           <div style={{ maxWidth: '420px', margin: '0 auto' }}>
             <p style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🔒</p>
@@ -377,18 +373,15 @@ export default function N5AdvancedClusterTestPage() {
             </button>
           </div>
         </main>
-      </>
+      </div>
+    </div>
     );
   }
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="n5-advanced-test" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="n5-advanced-test" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -680,7 +673,7 @@ export default function N5AdvancedClusterTestPage() {
           </div>
         </section>
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

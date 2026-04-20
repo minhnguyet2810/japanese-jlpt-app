@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -132,13 +132,9 @@ export default function Lesson3Page() {
   const [speakingList] = useState(() => getSpeakingSentences(lesson3.sentences, 10));
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson3" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson3" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -522,7 +518,7 @@ export default function Lesson3Page() {
           grammarContext="N1 は N2 です, ここ・そこ・あそこ・どこ, địa điểm (階)"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

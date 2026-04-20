@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -103,13 +103,9 @@ export default function Lesson5Page() {
   const currentVocab = vocabQuizItems[vocabIndex];
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson5" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson5" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -570,7 +566,7 @@ export default function Lesson5Page() {
           grammarContext="N へ 行きます・来ます・帰ります, で (phương tiện), と (cùng với), いつ"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

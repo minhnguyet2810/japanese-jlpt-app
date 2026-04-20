@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -57,13 +57,9 @@ export default function Lesson10Page() {
   const builderOptions = [...currentBuilder.tokens].sort();
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson10" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson10" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -618,7 +614,7 @@ export default function Lesson10Page() {
           grammarContext="N が います／あります, N は N の うえ／した／まえ／うしろ／なか／そと／となり／ちかく／あいだ です, や～など"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

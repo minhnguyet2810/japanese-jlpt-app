@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import WritingChallenge from '@/components/WritingChallenge';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -129,13 +129,9 @@ export default function Lesson7Page() {
   const [speakingList] = useState(() => getSpeakingSentences(lesson7.sentences, 10));
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson7" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson7" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -660,7 +656,7 @@ export default function Lesson7Page() {
           grammarContext="N1 は N2 に N3 を あげます, N1 は N2 から N3 を もらいます・かします・かります・おしえます・ならいます"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-

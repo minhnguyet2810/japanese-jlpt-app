@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import {
   n5MockTestQuestions,
   type N5TestQuestion,
@@ -321,13 +321,9 @@ export default function N5Test2125Page() {
   const item = SPEAKING_ITEMS_21_25[speakingIndex % SPEAKING_ITEMS_21_25.length];
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="n5-test-21-25" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="n5-test-21-25" />
+      <div className="sb-content">
 
       <main className="lesson-page">
         <section className="lesson-hero">
@@ -659,6 +655,7 @@ export default function N5Test2125Page() {
           </section>
         )}
       </main>
-    </>
+    </div>
+    </div>
   );
 }

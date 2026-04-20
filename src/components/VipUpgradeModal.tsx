@@ -92,7 +92,7 @@ export function VipUpgradeModal() {
             </p>
             <div className="vip-qr-block">
               <img
-                src="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=200&h=200&fit=crop"
+                src="https://img.vietqr.io/image/MB-0937011220-compact2.png?amount=199000&addInfo=VIP"
                 alt="QR thanh toán"
                 className="vip-qr-img"
                 width={200}
@@ -101,13 +101,13 @@ export function VipUpgradeModal() {
               <div className="vip-bank-info">
                 <p><strong>Ngân hàng:</strong> MB Bank</p>
                 <p><strong>STK:</strong> 0937011220</p>
-                <p><strong>Chủ TK:</strong> Nguyễn Minh Nguyệt</p>
+                <p><strong>Chủ TK:</strong> NGUYEN MINH NGUYET</p>
                 <p><strong>Số tiền:</strong> 199.000đ</p>
-                <p><strong>Nội dung:</strong> VIP [số điện thoại]</p>
+                <p><strong>Nội dung:</strong> VIP [SĐT hoặc Username của bạn]</p>
               </div>
             </div>
             <p className="vip-note-small">
-              Đây là giao diện thanh toán giả lập. Trong môi trường thật, bạn sẽ nhập thông tin và tích hợp cổng thanh toán.
+              Sau khi chuyển khoản thành công, tài khoản của bạn sẽ được kích hoạt VIP tự động hoặc bạn có thể báo cho admin nhé.
             </p>
             <button
               type="button"

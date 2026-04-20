@@ -14,10 +14,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [needsVerification, setNeedsVerification] = useState(false);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+    setNeedsVerification(false);
+    
     if (!email.trim() || !password) {
       setError('Vui lòng nhập email và mật khẩu.');
       return;
@@ -30,7 +35,12 @@ export default function LoginPage() {
         password,
       });
       if (err) {
-        setError(err.message);
+        if (err.message.includes('Email not confirmed')) {
+          setError('Email của bạn chưa được xác thực.');
+          setNeedsVerification(true);
+        } else {
+          setError(err.message === 'Invalid login credentials' ? 'Sai email hoặc mật khẩu.' : err.message);
+        }
         setLoading(false);
         return;
       }
@@ -40,6 +50,29 @@ export default function LoginPage() {
       setError(e instanceof Error ? e.message : 'Lỗi kết nối. Kiểm tra mạng hoặc cấu hình Supabase.');
       setLoading(false);
     }
+  };
+
+  const handleResendVerification = async () => {
+    setError('');
+    setSuccess('');
+    setLoading(true);
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const { error: err } = await supabase.auth.resend({
+        type: 'signup',
+        email: email.trim(),
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+      });
+      if (err) {
+        setError(err.message);
+      } else {
+        setSuccess('Đã gửi lại link xác nhận. Vui lòng kiểm tra hộp thư đến (và hộp thư rác).');
+        setNeedsVerification(false);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Lỗi khi gửi email xác thực.');
+    }
+    setLoading(false);
   };
 
   const handleGoogleLogin = async () => {
@@ -104,6 +137,20 @@ export default function LoginPage() {
             </p>
           </div>
           {error && <p style={{ color: '#b91c1c', fontSize: '0.875rem', margin: 0 }}>{error}</p>}
+          {success && <p style={{ color: '#166534', fontSize: '0.875rem', margin: 0 }}>{success}</p>}
+          
+          {needsVerification && (
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              className="auth-btn auth-btn-outline"
+              disabled={loading}
+              style={{ marginTop: '-0.5rem', marginBottom: '0.5rem' }}
+            >
+              Cần link mới? Gửi lại email xác thực
+            </button>
+          )}
+
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Đang xử lý...' : 'Đăng nhập'}
           </button>

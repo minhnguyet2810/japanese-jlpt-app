@@ -6,7 +6,7 @@ import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
 import AdvancedSkillPractice from '@/components/AdvancedSkillPractice';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { useUserState } from '@/store/useUserState';
 import {
   lesson18,
@@ -40,13 +40,9 @@ export default function Lesson18Page() {
   const currentGrammar = lesson18GrammarQuizItems[grammarIndex];
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson18" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson18" />
+      <div className="sb-content">
 
       {isLocked ? (
         <main className="lesson-page" style={{ padding: '2rem', textAlign: 'center' }}>
@@ -336,7 +332,7 @@ export default function Lesson18Page() {
           />
         </main>
       )}
-    </>
+    </div>
+    </div>
   );
 }
-

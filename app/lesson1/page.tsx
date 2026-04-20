@@ -15,7 +15,7 @@ import {
 } from '@/data/lessons/lesson1';
 import WritingChallenge from '@/components/WritingChallenge';
 import { PracticeWord } from '@/components/PracticeWord';
-import { LessonNav } from '@/components/LessonNav';
+import { Sidebar } from '@/components/Sidebar';
 import { SpeakingGameMulti } from '@/components/SpeakingGameMulti';
 import { getSpeakingSentences } from '@/data/speakingPool';
 import ListeningDictation from '@/components/ListeningDictation';
@@ -207,13 +207,9 @@ export default function Lesson1Page() {
   }, [drillChecked, drillInputs, grammarDrills]);
 
   return (
-    <>
-      <header className="app-header">
-        <div className="app-header-inner">
-          <span className="app-logo">日本語</span>
-          <LessonNav currentLessonId="lesson1" />
-        </div>
-      </header>
+    <div className="sb-layout">
+      <Sidebar currentLessonId="lesson1" />
+      <div className="sb-content">
       <main className="lesson-page">
         <section className="lesson-hero">
           <h1 className="lesson-title">Bài 1: Giới thiệu bản thân</h1>
@@ -890,7 +886,7 @@ export default function Lesson1Page() {
           grammarContext="N1 は N2 です, ではありません, ですか, N1 の N2"
         />
       </main>
-    </>
+    </div>
+    </div>
   );
 }
-
