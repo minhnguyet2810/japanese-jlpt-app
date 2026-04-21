@@ -83,7 +83,7 @@ export function KanjiRadicalLearning() {
 
   const gameChoices = (() => {
     if (!flashcardItem || flashcardMode !== 'game') return [];
-    const others = KANJI_MINNA_13_15.filter((k) => k.kanji !== flashcardItem.kanji);
+    const others = currentFlashcards.filter((k) => k.kanji !== flashcardItem.kanji);
     const wrong = shuffle(others).slice(0, 3).map((k) => k.kanji);
     return shuffle([flashcardItem.kanji, ...wrong]);
   })();
@@ -515,7 +515,7 @@ export function KanjiRadicalLearning() {
                 value={selectedKanji}
                 onChange={(e) => setSelectedKanji(e.target.value)}
               >
-                {KANJI_MINNA_13_15.map((k) => (
+                {KANJI_DECOMPOSITIONS.map((k) => (
                   <option key={k.kanji} value={k.kanji}>{k.kanji} – {k.meaningVi}</option>
                 ))}
               </select>
