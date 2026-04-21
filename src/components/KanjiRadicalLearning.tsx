@@ -17,7 +17,7 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'radicals', label: '214 Bộ thủ' },
   { id: 'decompose', label: 'Phân rã chữ' },
   { id: 'chinese', label: 'Kanji – Hán' },
-  { id: 'flashcard', label: 'Flashcard B13–15' },
+  { id: 'flashcard', label: 'Flashcards N5' },
   { id: 'canvas', label: 'Tập viết' },
 ];
 
