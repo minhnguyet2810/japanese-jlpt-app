@@ -353,7 +353,7 @@ export function KanjiRadicalLearning() {
                       animate={{
                         y: offset * 16,
                         scale: 1 - offset * 0.05,
-                        opacity: 1 - offset * 0.3,
+                        opacity: 1,
                         zIndex: 10 - offset,
                       }}
                       transition={{

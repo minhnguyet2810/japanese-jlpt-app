@@ -1369,36 +1369,7 @@ main {
 .chinese-label { font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.25rem; }
 .chinese-char { font-size: 1.75rem; }
 .chinese-note { font-size: 0.85rem; color: #0f766e; margin-top: 1rem; }
-.kanji-flashcard {
-  min-height: 220px;
-  perspective: 1000px;
-  cursor: pointer;
-}
-.flashcard-inner {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  transition: transform 0.5s;
-  transform-style: preserve-3d;
-}
-.flashcard-inner.flipped { transform: rotateY(180deg); }
-.flashcard-front, .flashcard-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2.25rem;
-  border: 1px solid rgba(13, 148, 136, 0.12);
-  background: linear-gradient(135deg, #ffffff 0%, #fcfdfd 100%);
-  box-shadow: 
-    0 20px 50px rgba(0, 0, 0, 0.08), 
-    0 2px 6px rgba(13, 148, 136, 0.04);
-}
+
 .flashcard-nav { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
 .flashcard-counter { 
   font-family: 'Plus Jakarta Sans', sans-serif;
