@@ -347,7 +347,6 @@ export function KanjiRadicalLearning() {
                     <div
                       key={`${idx}-${offset}`}
                       className={`flashcard-stack-card ${offset === 0 ? 'stack-front' : offset === 1 ? 'stack-back' : 'stack-back-2'}`}
-                      style={{ top: offset * 8 }}
                       onClick={() => isFront && setFlashcardFlipped((f) => !f)}
                       role={isFront ? 'button' : undefined}
                       tabIndex={isFront ? 0 : undefined}
