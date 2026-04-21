@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { RADICALS_214, getRadicalByChar } from '@/data/radicals214';
 import {
   KANJI_DECOMPOSITIONS,
@@ -335,7 +336,7 @@ export function KanjiRadicalLearning() {
           </div>
 
           {flashcardMode === 'flashcard' && flashcardItem && (
-            <>
+            <div style={{ maxWidth: 440, margin: '0 auto' }}>
               <div className="flashcard-stack-wrap">
                 {[2, 1, 0].map((offset) => {
                   const idx = (flashcardIndex + offset) % totalFlash;
@@ -343,33 +344,56 @@ export function KanjiRadicalLearning() {
                   if (!item) return null;
                   const isFront = offset === 0;
                   const flipped = isFront && flashcardFlipped;
+
                   return (
-                    <div
+                    <motion.div
                       key={`${idx}-${offset}`}
-                      className={`flashcard-stack-card ${offset === 0 ? 'stack-front' : offset === 1 ? 'stack-back' : 'stack-back-2'}`}
+                      className="flashcard-stack-card"
+                      initial={false}
+                      animate={{
+                        y: offset * 16,
+                        scale: 1 - offset * 0.05,
+                        opacity: 1 - offset * 0.3,
+                        zIndex: 10 - offset,
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 260,
+                        damping: 20
+                      }}
                       onClick={() => isFront && setFlashcardFlipped((f) => !f)}
-                      role={isFront ? 'button' : undefined}
-                      tabIndex={isFront ? 0 : undefined}
-                      onKeyDown={isFront ? (e) => e.key === 'Enter' && setFlashcardFlipped((f) => !f) : undefined}
+                      style={{ cursor: isFront ? 'pointer' : 'default' }}
                     >
-                      <div className={'flashcard-inner' + (flipped ? ' flipped' : '')} style={{ height: '100%', width: '100%' }}>
-                        <div className="flashcard-front" style={{ position: 'absolute', inset: 0 }}>
+                      <motion.div
+                        className="flashcard-inner"
+                        initial={false}
+                        animate={{ rotateY: flipped ? 180 : 0 }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 200,
+                          damping: 25,
+                          mass: 1.2
+                        }}
+                      >
+                        <div className="flashcard-front">
                           <div className="flashcard-radicals">
                             {item.radicals.map((r, i) => (
                               <span key={i} className="jp flashcard-radical-char">{r}</span>
                             ))}
                           </div>
-                          <p className="flashcard-hint">Bấm để lật xem chữ & nghĩa</p>
+                          <p className="flashcard-hint">Chạm để lật thẻ</p>
                         </div>
-                        <div className="flashcard-back" style={{ position: 'absolute', inset: 0 }}>
+                        <div className="flashcard-back">
                           <span className="jp flashcard-kanji">{item.kanji}</span>
                           <span className="flashcard-meaning">{item.meaningVi}</span>
                           {(item.onyomi || item.kunyomi) && (
-                            <span className="flashcard-readings">{item.onyomi} {item.kunyomi}</span>
+                            <span className="flashcard-readings">
+                              {item.onyomi} • {item.kunyomi}
+                            </span>
                           )}
                         </div>
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -379,7 +403,7 @@ export function KanjiRadicalLearning() {
                   className="secondary-button"
                   onClick={() => { setFlashcardFlipped(false); setFlashcardIndex((i) => Math.max(0, i - 1)); }}
                 >
-                  ← Trước
+                  Trước
                 </button>
                 <span className="flashcard-counter">{flashcardIndex + 1} / {totalFlash}</span>
                 <button
@@ -387,10 +411,10 @@ export function KanjiRadicalLearning() {
                   className="secondary-button"
                   onClick={() => { setFlashcardFlipped(false); setFlashcardIndex((i) => i + 1); }}
                 >
-                  Sau →
+                  Sau
                 </button>
               </div>
-            </>
+            </div>
           )}
 
           {flashcardMode === 'game' && flashcardItem && (
