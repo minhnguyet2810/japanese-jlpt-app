@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RADICALS_214, getRadicalByChar } from '@/data/radicals214';
 import {
   KANJI_DECOMPOSITIONS,
-  KANJI_MINNA_13_15,
   getDecomposition,
+  getKanjiByLessonRange
 } from '@/data/kanjiDecomposition';
 
 type TabId = 'radicals' | 'decompose' | 'chinese' | 'flashcard' | 'canvas';
@@ -37,6 +37,7 @@ export function KanjiRadicalLearning() {
   const [flashcardIndex, setFlashcardIndex] = useState(0);
   const [flashcardFlipped, setFlashcardFlipped] = useState(false);
   const [flashcardMode, setFlashcardMode] = useState<FlashcardMode>('flashcard');
+  const [lessonRange, setLessonRange] = useState('1-5');
   const [gameScore, setGameScore] = useState({ correct: 0, total: 0 });
   const [gameAnswered, setGameAnswered] = useState<string | null>(null);
   const [gameOrder, setGameOrder] = useState<number[]>([]);
@@ -59,14 +60,22 @@ export function KanjiRadicalLearning() {
     : RADICALS_214;
 
   const decomp = getDecomposition(selectedKanji);
-  const totalFlash = Math.max(1, KANJI_MINNA_13_15.length);
+  const lessonRanges = ['1-5', '6-10', '11-15', '16-20', '21-25', 'All'];
+  const getFilteredFlashcards = useCallback(() => {
+    if (lessonRange === 'All') return KANJI_DECOMPOSITIONS;
+    const [start, end] = lessonRange.split('-').map(Number);
+    return getKanjiByLessonRange(start, end);
+  }, [lessonRange]);
+
+  const currentFlashcards = getFilteredFlashcards();
+  const totalFlash = Math.max(1, currentFlashcards.length);
   const flashcardItem = flashcardMode === 'game' && gameOrder.length > 0
-    ? KANJI_MINNA_13_15[gameOrder[flashcardIndex % gameOrder.length]]
-    : KANJI_MINNA_13_15[flashcardIndex % totalFlash];
+    ? currentFlashcards[gameOrder[flashcardIndex % gameOrder.length]]
+    : currentFlashcards[flashcardIndex % totalFlash];
 
   const startFlashcardGame = useCallback(() => {
     setFlashcardMode('game');
-    setGameOrder(shuffle(KANJI_MINNA_13_15.map((_, i) => i)));
+    setGameOrder(shuffle(currentFlashcards.map((_, i) => i)));
     setFlashcardIndex(0);
     setGameScore({ correct: 0, total: 0 });
     setGameAnswered(null);
@@ -314,10 +323,29 @@ export function KanjiRadicalLearning() {
 
       {activeTab === 'flashcard' && (
         <section className="kanji-section">
-          <h2 className="kanji-section-title">Flashcard Kanji – Minna Bài 13–15</h2>
+          <h2 className="kanji-section-title">Flashcard Kanji – Minna no Nihongo</h2>
           <p className="kanji-section-desc">
-            Xem thẻ xếp chồng, lật thẻ để xem chữ & nghĩa. Hoặc chơi game: chọn đúng chữ theo nghĩa.
+            Chọn bài học, xem thẻ xếp chồng, lật thẻ để xem chữ & nghĩa. Hoặc chơi game: chọn đúng chữ theo nghĩa.
           </p>
+
+          <div className="flashcard-mode-toggle" style={{ marginBottom: '1.5rem' }}>
+            {lessonRanges.map((range) => (
+              <button
+                key={range}
+                type="button"
+                className={lessonRange === range ? 'active' : ''}
+                onClick={() => {
+                  setLessonRange(range);
+                  setFlashcardIndex(0);
+                  setFlashcardFlipped(false);
+                }}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 0.75rem' }}
+              >
+                Bài {range}
+              </button>
+            ))}
+          </div>
+
           <div className="flashcard-mode-toggle">
             <button
               type="button"
@@ -340,7 +368,7 @@ export function KanjiRadicalLearning() {
               <div className="flashcard-stack-wrap">
                 {[2, 1, 0].map((offset) => {
                   const idx = (flashcardIndex + offset) % totalFlash;
-                  const item = KANJI_MINNA_13_15[idx];
+                  const item = currentFlashcards[idx];
                   if (!item) return null;
                   const isFront = offset === 0;
                   const flipped = isFront && flashcardFlipped;
